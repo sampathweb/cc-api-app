@@ -32,18 +32,17 @@ curl -i http://localhost:9000/api/iris/predict -X POST -d '{ "sepal_length": 2, 
 
 
 Api works!
-```
 
 ### Push code to your own git repo.
+
+Make sure you are in the Application directory
 
 ```
 git init
 git add --all
-git commit -m "initial commit"
-
-git remote add origin <your remote repo>
-
-git push 
+git commit -m "first commit"
+git remote add origin https://github.com/<your github username>/<remote repo name>.git
+git push --set-upstream origin master
 
 ```
 
@@ -75,105 +74,56 @@ source ~/.bashrc
 
 ### Download App Source Code:
 ```
-# Create a Projects directory where we will keep the App source files
-mkdir projects
-cd projects
+
+git clone https://github.com/sampathweb/iris-api-app.git
 
 
-# Clone the Repo
-git clone <your app repo>
-```
+cd iris-api-app
+python env/create_env.py
+source activate env/venv
+python env/install_packages.py
 
-### Create Conda Environment
+python ml_src/build_model.py
+python run.py (Confirm that App is running)
 
-```
-cd <your app directory>
-# do `ls` to confirm that you see environment.yml and other files
 
-# conda create env: 
-conda env create -f environment.yml
+sudo apt-get install supervisor
+sudo vi /etc/supervisor/conf.d/iris-api.conf
+<press i insert mode>
 
-# Activate environent
-source activate iris-app-env
-```
-
-### Run App
-
-```
-# Try running them manually to see if that works.  More than likely fail
-python run.py
-
-# We need to run the model script
-make clean
-make build_model_iris
-
-# Now run the app
-python run.py
-```
-
-### Install Supervisor
-
-```
-# Install Supervisor to run our App process
-apt-get install supervisor
-
-# Create Supervisor Config
-sudo vi /etc/supervisor/conf.d/iris-app.conf
-
-# Go to insert mode by pressing `i` then Add the following config
-
-[program:iris-app]
-autostart = true
+[program:iris-api-app]
 autorestart = true
-command = /home/ubuntu/miniconda3/envs/iris-app-env/bin/gunicorn run:application -b localhost:8000
-directory = /home/ubuntu/projects/iris-predictor-flask-app
-environment = PYTHONPATH="/home/ubuntu/miniconda3/envs/iris-app-env/bin/"
+command = /home/ubuntu/iris-api-app/env/venv/bin/python /home/ubuntu/iris-api-app/run.py --debug=False --port=80
 numprocs = 1
 startsecs = 10
-stderr_logfile = /var/log/supervisor/iris-app.log
-stdout_logfile = /var/log/supervisor/iris-app.log
+stderr_logfile = /var/log/supervisor/iris-api-app.log
+stdout_logfile = /var/log/supervisor/iris-api-app.log
+# stderr_logfile = syslog
+# stdout_logfile = syslog
+environment = PYTHONPATH="/home/ubuntu/iris-api-app/env/bin/"
 
-```
+<escape :wq>
 
-* Replace the Path with your path setup in the `command`.  If you installed miniconda2, you may need to change miniconda3 to 2.
-
-* Replace the `directory` to where your application is installed.
-
-* Replace `environment:PYTHONPATH` to the conda environment.
-
-`Go to vi command mode by pressing `esc` key and `:wq` to write and quit.
-
-
-### Run Supervisor
-
-```
-# Reload supervisor config
 sudo supervisorctl reload
 
-# Start all supervisor process
-sudo supervisorctl restart all
-
-# Check status
-sudo supervisorctl status
+<Your APP is live now>
 ```
 
-* If the process failed or say anything other than Running (after it says starting), then check supervisor logs in `/var/log/supervisor/..`
+### Test the App
+
+1. Open Browser:  http://<AWS IP> (App is Live!)
+
+2. Test API:
+
+curl -i http://<aws ip address>/api/iris/predict -X POST -d '{ "sepal_length": 2, "sepal_width": 5, "petal_length": 3, "petal_width": 4}'
 
 
-### Redirect Port
-
-Redirect Port 80 to 8000 where your app is running
-
+Congratulations you have deployed your App
 ```
-sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-```
-
-Open Browser and check if you can see your app from `http://<your aws ip>`.
-
 
 ## Credits:
 
-Template from https://github.com/sampathweb/ml-cookiecutter-starter-flask-app
+Template from https://github.com/sampathweb/cc-api-app
 
 
 ### The End.
