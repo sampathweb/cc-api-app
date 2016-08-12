@@ -5,7 +5,7 @@
 ### Installation
 
 ```
-cookiecutter https://github.com/sampathweb/cc-ml-api-app
+cookiecutter https://github.com/sampathweb/cc-api-app
 
 cd <repo>  # cd iris-api-app
 
