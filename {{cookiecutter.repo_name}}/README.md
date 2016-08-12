@@ -1,6 +1,51 @@
-# IRIS App
+# Sample IRIS API App
 
-Sample Flask web App using Scikit-Learn to predict IRIS Flower.
+## Setup Environment on Local Machine
+
+### Installation
+
+```
+cookiecutter https://github.com/sampathweb/cc-ml-api-app
+
+cd <repo>  # cd iris-api-app
+
+# Install Packages
+python env/create_env.py
+source activate env/venv  # Windows users: activate env/venv
+python env/install_packages.py
+
+# Build the Model
+python ml_src/build_model.py
+
+# Run the App
+python run.py
+````
+
+### Test App
+
+
+1. Open Browser:  http://localhost:9000 (App is Live!)
+
+2. Test API:
+
+curl -i http://localhost:9000/api/iris/predict -X POST -d '{ "sepal_length": 2, "sepal_width": 5, "petal_length": 3, "petal_width": 4}'
+
+
+Api works!
+```
+
+### Push code to your own git repo.
+
+```
+git init
+git add --all
+git commit -m "initial commit"
+
+git remote add origin <your remote repo>
+
+git push 
+
+```
 
 
 ## Deploy Steps for AWS Ubuntu 14.04 LTS EC2 Instance

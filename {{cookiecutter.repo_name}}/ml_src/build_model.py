@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 
 from sklearn.neighbors import KNeighborsClassifier
@@ -18,9 +20,10 @@ if __name__ == "__main__":
 
     _CUR_DIR = os.path.dirname(os.path.realpath(__file__))
     _SERIALIZATION_DIR = os.path.join(_CUR_DIR, "..", "models", "iris")
-    
+
     if not os.path.exists(_SERIALIZATION_DIR):
         os.makedirs(_SERIALIZATION_DIR)
     model_filename = os.path.join(_SERIALIZATION_DIR, "model.pkl")
-    
+
     joblib.dump(knn, model_filename)
+    print("Successfully Built and Picked into models folder")

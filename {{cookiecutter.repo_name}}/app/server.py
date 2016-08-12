@@ -8,7 +8,7 @@ from tornado.options import options
 
 from sklearn.externals import joblib
 
-from app.settings import LOG_SETTINGS, MODEL_DIR, AUTH_KEY, AUTH_SECRET
+from app.settings import MODEL_DIR, AUTH_KEY, AUTH_SECRET
 from app.auth_handler import setup_auth_controller, AuthTokenHandler, AuthTestHandler
 from app.handler import IndexHandler, IrisPredictionHandler
 
