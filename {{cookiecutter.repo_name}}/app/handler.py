@@ -7,7 +7,7 @@ from tornado import gen
 from concurrent.futures import ThreadPoolExecutor
 
 from app.base_handler import BaseApiHandler
-from app.settings import MAX_THREAD_POOL
+from app.settings import MAX_MODEL_THREAD_POOL
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -22,7 +22,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class IrisPredictionHandler(BaseApiHandler):
 
-    _thread_pool = ThreadPoolExecutor(max_workers=MAX_THREAD_POOL)
+    _thread_pool = ThreadPoolExecutor(max_workers=MAX_MODEL_THREAD_POOL)
 
     def initialize(self, model, *args, **kwargs):
         self.model = model

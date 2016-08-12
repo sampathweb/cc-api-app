@@ -11,7 +11,7 @@ from app.exceptions import ApplicationError, RouteNotFound, ServerError
 
 logger = logging.getLogger("app")
 
-class BaseApiHandler(BaseAuthHandler):
+class BaseApiHandler(tornado.web.RequestHandler):
 
     @tornado.web.asynchronous
     def post(self, action):

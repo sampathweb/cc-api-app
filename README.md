@@ -12,10 +12,9 @@ _A logical, reasonably standardized, but flexible project structure for doing an
 ### To start a new project, run:
 ------------
 
-    cookiecutter https://github.com/sampathweb/cookiecutter-ml-api-app
+    cookiecutter https://github.com/sampathweb/cc-ml-api-app
 
 ### Credits:
 ------
 
 * Based on the excellent CookieCutter Project (http://cookiecutter.readthedocs.org)
-* Template adopted from [Data Driven CookieCutter Project](http://drivendata.github.io/cookiecutter-data-science/)

@@ -13,70 +13,7 @@ MODEL_DIR = os.path.join(_CUR_DIR, "..", "models")
 LOG_DIR = os.path.join(_CUR_DIR, "..", "logs")
 
 # Auth Settings
-AUTH_KEY = "Secret Key"
-AUTH_SECRET = "You will never guess!"
+AUTH_KEY = "admin"
+AUTH_SECRET = "pydata"
 
-MAX_THREAD_POOL = 10
-
-LOG_SETTINGS = {
-    'version': 1,
-    "root": {
-        "level": "WARNING",
-        "handlers": ["console"],
-    },
-    "formatters": {
-        "json": {
-            "()": "app.utils.log_formatters.JSONFormatter",
-        },
-        "simple": {
-            "format": "%(levelname)s %(message)s",
-        }
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-            'formatter': "simple"
-        },
-        'applog': {
-            "class": "logging.handlers.TimedRotatingFileHandler",
-            'level': "INFO",
-            'formatter': "json",
-            'filename': os.path.join(LOG_DIR, "app.log"),
-            "when": "D",
-            "interval": 2,
-            "backupCount": 5
-        },
-        'accesslog': {
-            "class": "logging.handlers.TimedRotatingFileHandler",
-            'level': "INFO",
-            'formatter': "json",
-            'filename': os.path.join(LOG_DIR, "access.log"),
-            "when": "D",
-            "interval": 2,
-            "backupCount": 5
-        },
-    },
-    "loggers": {
-        "tornado.access": {
-            "handlers": ["console", "accesslog"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "tornado.application": {
-            "handlers": ["console", "applog"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "tornado.general": {
-            "handlers": ["console", "applog"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "app": {
-            "handlers": ["console", "applog"],
-            "level": "INFO",
-            "propagate": False,
-        },
-    }
-}
+MAX_MODEL_THREAD_POOL = 10

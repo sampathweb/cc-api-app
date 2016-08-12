@@ -38,15 +38,15 @@ def main():
     logger.info("Loading IRIS Prediction Model...")
     MODELS["iris"] = load_model(os.path.join(MODEL_DIR, "iris", "model.pkl"))
 
-    # Setup Auth Controller
-    auth_controller = setup_auth_controller(AUTH_KEY, AUTH_SECRET, auth_url="/auth/token")
+    # # Setup Auth Controller
+    # auth_controller = setup_auth_controller(AUTH_KEY, AUTH_SECRET, auth_url="/auth/token")
+    #     (r'/auth/token', AuthTokenHandler, dict(controller=auth_controller)),
+    #     (r'/auth/test', AuthTestHandler, dict(controller=auth_controller)),
 
     urls = [
         (r"/$", IndexHandler),
-        (r'/auth/token', AuthTokenHandler, dict(controller=auth_controller)),
-        (r'/auth/test', AuthTestHandler, dict(controller=auth_controller)),
         (r"/api/iris/(?P<action>[a-zA-Z]+)?", IrisPredictionHandler,
-            dict(controller=auth_controller, model=MODELS["iris"]))
+            dict(model=MODELS["iris"]))
     ]
 
     # Create Tornado application
